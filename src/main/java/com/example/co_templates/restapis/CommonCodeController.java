@@ -26,8 +26,7 @@ public class CommonCodeController {
     }
 
     @GetMapping("/r/commonCode/mixed/{pageNumber}/{pk_id}")
-    public ResponseEntity<HashMap<String, Object>> mixed(@PathVariable("pageNumber") Integer pageNumber,
-            @PathVariable("pk_id") Integer pkId) {
+    public ResponseEntity<HashMap<String, Object>> mixed(@PathVariable("pageNumber") Integer pageNumber, @PathVariable("pk_id") Integer pkId) {
         // call service
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap = commonCodeService.mixed(pageNumber, pkId);

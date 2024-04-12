@@ -12,4 +12,17 @@
 		WHERE 1 = 1
 		AND PK_UNIQUE = #{PK_UNIQUE}; <!-- #{PK_UNIQUE} -->
 	</select>
+
+	<!-- 입력 -->
+	<insert id="insert" parameterType="Map">
+	INSERT INTO `COMMON_CODE` 
+	(`PK_UNIQUE`, `CODE_NAME`, `DESCRIPTION`, `PARENT_UNIQUE`) 
+	VALUES
+	(#{PK_UNIQUE}, #{CODE_NAME}, #{DESCRIPTION}, #{PARENT_UNIQUE});
+    </insert>
+
+	<!-- 수정 -->
+	<update id="update" parameterType="Map">
+	
+    </update>
 </mapper>

@@ -21,4 +21,16 @@ public class ShareDao {
         Object result = sqlSessionTemplate.selectOne(sqlMapId, dataMap);
         return result;
     }
+
+    //만듬
+    public Object insert(String sqlMapId, Object dataMap){
+        Object result = sqlSessionTemplate.insert(sqlMapId, dataMap);
+        return result;
+    }
+
+    // 수정
+    public Object update(String sqlMapId, Object dataMap){
+        Object result = sqlSessionTemplate.update(sqlMapId, dataMap);
+        return result;
+    }
 }

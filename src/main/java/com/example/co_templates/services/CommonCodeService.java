@@ -7,13 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.co_templates.daos.ShareDao;
+import com.example.co_templates.utils.Commons;
 
 @Service
 public class CommonCodeService {
     @Autowired
     ShareDao shareDao;
 
+    @Autowired
+    Commons commons;
+
     public void callDao(HashMap<String,Object> dataMap){
+
         // 여러개 가져오기
         String sqlMapId = "CommonCode.selectBysearch";
         Object list = shareDao.getList(sqlMapId, dataMap);
@@ -22,6 +27,18 @@ public class CommonCodeService {
         sqlMapId = "CommonCode.selectByUID";
         dataMap.put("PK_UNIQUE","CC002");
         Object one = shareDao.getOne(sqlMapId, dataMap);
+
+        // 데이터 입력
+        sqlMapId = "CommonCode.insert";
+        // INSERT INTO `COMMON_CODE` 
+        // (`PK_UNIQUE`, `CODE_NAME`, `DESCRIPTION`, `PARENT_UNIQUE`) 
+        // VALUES
+        // ('CC017', 'test_insert', 'test insert', '');
+        dataMap.put("PK_UNIQUE",commons.getUniqueSequence());
+        dataMap.put("CODE_NAME","test_insert");
+        dataMap.put("DESCRIPTION","test insert");
+        dataMap.put("PARENT_UNIQUE","");
+        Object insert = shareDao.insert(sqlMapId, dataMap);
 
         return;
     }    
