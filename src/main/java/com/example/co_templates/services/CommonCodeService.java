@@ -34,11 +34,22 @@ public class CommonCodeService {
         // (`PK_UNIQUE`, `CODE_NAME`, `DESCRIPTION`, `PARENT_UNIQUE`) 
         // VALUES
         // ('CC017', 'test_insert', 'test insert', '');
-        dataMap.put("PK_UNIQUE",commons.getUniqueSequence());
+        String pk_unique = commons.getUniqueSequence();
+        dataMap.put("PK_UNIQUE",pk_unique);
         dataMap.put("CODE_NAME","test_insert");
         dataMap.put("DESCRIPTION","test insert");
         dataMap.put("PARENT_UNIQUE","");
         Object insert = shareDao.insert(sqlMapId, dataMap);
+
+        // 갱신
+        sqlMapId = "CommonCode.update";
+        dataMap.put("PK_UNIQUE",pk_unique);
+        dataMap.put("CODE_NAME","test_root");
+        Object update = shareDao.update(sqlMapId, dataMap);
+
+        sqlMapId = "CommonCode.delete";
+        dataMap.put("PK_UNIQUE",pk_unique);
+        Object delete = shareDao.delete(sqlMapId, dataMap);
 
         return;
     }    
