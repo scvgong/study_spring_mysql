@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.co_templates.quests.services.QuestBoardService;
-import com.example.co_templates.quests.services.QuestCommentsService;
+import com.example.co_templates.quests.services.QuestVisitorsService;
 
 
 @RestController
@@ -21,7 +21,7 @@ public class QuestBoardController {
     QuestBoardService BoardService;
 
     @Autowired
-    QuestCommentsService CommentsService;
+    QuestVisitorsService CommentsService;
 
     @GetMapping("/q/r/board/callBoardList")
     public void callBoardList(HashMap<String,Object> datMap) {
@@ -48,26 +48,26 @@ public class QuestBoardController {
     }
 
     @GetMapping("/q/r/comments/callCommentsList")
-    public void callCommentsList(HashMap datMap) {
-        CommentsService.callCommentsList(datMap);
+    public void callVisitorsList(HashMap datMap) {
+        CommentsService.callVisitorsList(datMap);
         return;
     }
 
     @GetMapping("/q/r/comments/callCommentsInsert")
-    public void callCommentsInsert(HashMap datMap) {
-        CommentsService.callCommentsInsert(datMap);
+    public void callVisitorsInsert(HashMap datMap) {
+        CommentsService.callVisitorsInsert(datMap);
         return;
     }
     
     @GetMapping("/q/r/comments/callCommentsUpdate")
-    public void callCommentsUpdate(HashMap datMap) {
-        CommentsService.callCommentsUpdate(datMap);
+    public void callVisitorsUpdate(HashMap datMap) {
+        CommentsService.callVisitorsUpdate(datMap);
         return;
     }
 
     @GetMapping("/q/r/comments/callCommentsDelete")
-    public void callCommentsDelete(HashMap datMap) {
-        CommentsService.callCommentsDelete(datMap);
+    public void callVisitorsDelete(HashMap datMap) {
+        CommentsService.callVisitorsDelete(datMap);
         return;
     }
     
