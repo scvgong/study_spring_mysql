@@ -65,6 +65,12 @@ public class TemplateJSP {
                 <% } else { %>
                     <p> Today is not weekend</p>
                 <% } %>
+                <div>
+                    <%  String name = (String) request.getAttribute("name"); %>
+                    <div>name : <%= name %></div>
+                    <%  String age = (String) request.getAttribute("age"); %>
+                    <div>age : <%= age %></div>
+                </div>
             </body> 
         </html> 
          */
