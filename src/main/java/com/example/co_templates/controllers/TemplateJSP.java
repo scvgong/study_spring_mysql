@@ -25,7 +25,6 @@ public class TemplateJSP {
 
         String viewPath = "/WEB-INF/views/template_jspstatements.jsp";
         modelAndView.setViewName(viewPath);
-
         return modelAndView;
     }
 
