@@ -2,7 +2,9 @@ package com.example.co_templates.quests.restapis;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.co_templates.quests.services.QuestBoardService;
@@ -16,54 +18,54 @@ public class QuestBoardController {
     QuestBoardService BoardService;
 
     @Autowired
-    QuestVisitorsService CommentsService;
+    QuestVisitorsService VisitorsService;
 
-    @GetMapping("/q/r/board/callBoardList")
-    public void callBoardList(HashMap<String,Object> datMap) {
-        BoardService.callBoardList(datMap);
-        return;
+    @GetMapping({"/q/r/board/BoardList/{pageNumber}","/q/r/board/BoardList"})
+    public ResponseEntity<Object> BoardList(@PathVariable(required = false) String pageNumber,HashMap<String,Object> dataMap) {
+        Object list = BoardService.BoardList(dataMap);
+        return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping("/q/r/board/callBoardInsert")
-    public void callBoardInsert(HashMap datMap) {
-        BoardService.callBoardInsert(datMap);
-        return;
+    @GetMapping({"/q/r/board/BoardInsert/{pageNumber}","/q/r/board/BoardInsert"})
+    public ResponseEntity<Object> BoardInsert (@PathVariable(required = false) String pageNumber,HashMap<String,Object> dataMap) {
+        Object insert = BoardService.BoardInsert(dataMap);
+        return ResponseEntity.ok().body(insert);
     }
 
-    @GetMapping("/q/r/board/callBoardUpdate")
-    public void callBoardUpdate(HashMap datMap) {
-        BoardService.callBoardUpdate(datMap);
-        return;
+    @GetMapping({"/q/r/board/BoardUpdate/{pageNumber}","/q/r/board/BoardUpdate"})
+    public ResponseEntity<Object> BoardUpdate(@PathVariable(required = false) String pageNumber,HashMap<String,Object> dataMap) {
+        Object update = BoardService.BoardUpdate(dataMap);
+        return ResponseEntity.ok().body(update);
     }
 
-    @GetMapping("/q/r/board/callBoardDelete")
-    public void callBoardDelete(HashMap datMap) {
-        BoardService.callBoardDelete(datMap);
-        return;
+    @GetMapping({"/q/r/board/BoardDelete/{pageNumber}","/q/r/board/BoardDelete"})
+    public ResponseEntity<Object> BoardDelete(@PathVariable(required = false) String pageNumber,HashMap<String,Object> dataMap) {
+        Object delete = BoardService.BoardDelete(dataMap);
+        return ResponseEntity.ok().body(delete);
     }
 
-    @GetMapping("/q/r/comments/callCommentsList")
-    public void callVisitorsList(HashMap datMap) {
-        CommentsService.callVisitorsList(datMap);
-        return;
+    @GetMapping({"/q/r/Visitors/VisitorsList/{pageNumber}","/q/r/Visitors/VisitorsList"})
+    public ResponseEntity<Object> VisitorsList(@PathVariable(required = false) String pageNumber,HashMap<String,Object> dataMap) {
+        Object list = VisitorsService.VisitorsList(dataMap);
+        return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping("/q/r/comments/callCommentsInsert")
-    public void callVisitorsInsert(HashMap datMap) {
-        CommentsService.callVisitorsInsert(datMap);
-        return;
+    @GetMapping({"/q/r/Visitors/VisitorsInsert/{pageNumber}","/q/r/Visitors/VisitorsInsert"})
+    public ResponseEntity<Object> VisitorsInsert(@PathVariable(required = false) String pageNumber,HashMap<String,Object> dataMap) {
+        Object insert = VisitorsService.VisitorsInsert(dataMap);
+        return ResponseEntity.ok().body(insert);
     }
     
-    @GetMapping("/q/r/comments/callCommentsUpdate")
-    public void callVisitorsUpdate(HashMap datMap) {
-        CommentsService.callVisitorsUpdate(datMap);
-        return;
+    @GetMapping({"/q/r/Visitors/VisitorsUpdate/{pageNumber}","/q/r/Visitors/VisitorsUpdate"})
+    public ResponseEntity<Object> VisitorsUpdate(@PathVariable(required = false) String pageNumber,HashMap<String,Object> dataMap) {
+        Object update = VisitorsService.VisitorsUpdate(dataMap);
+        return ResponseEntity.ok().body(update);
     }
 
-    @GetMapping("/q/r/comments/callCommentsDelete")
-    public void callVisitorsDelete(HashMap datMap) {
-        CommentsService.callVisitorsDelete(datMap);
-        return;
+    @GetMapping({"/q/r/Visitors/VisitorsDelete/{pageNumber}","/q/r/Visitors/VisitorsDelete"})
+    public ResponseEntity<Object> VisitorsDelete(@PathVariable(required = false) String pageNumber,HashMap<String,Object> dataMap) {
+        Object delete = VisitorsService.VisitorsDelete(dataMap);
+        return ResponseEntity.ok().body(delete);
     }
     
 }

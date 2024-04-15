@@ -18,8 +18,9 @@ public class BoardRestController {
     
     // /r/board/list/{page}?searchword={word}
     // /r/board/list/2?searchword=coco lang
-    @GetMapping({"/r/board/list/{pageNumber}","/r/board/list"})
+    @GetMapping({"/r/board/list/{pageNumber}","/r/board/list"}) // uri 잘못입력했을때도 request 되게 추가 작성
     public ResponseEntity<Object> callBoardList(@PathVariable(required = false) String pageNumber, @RequestBody HashMap<String,Object> dataMap) {
+                                                // 잘못된 uri 입력했을때도 전송되게 하기
         Object list = BoardService.list(dataMap);
 
         return ResponseEntity.ok().body(list);

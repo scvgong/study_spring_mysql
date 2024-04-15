@@ -16,12 +16,13 @@ public class QuestVisitorsService {
     @Autowired
     Commons commons;
 
-    public void callVisitorsList(HashMap<String,Object> dataMap){
+    public Object VisitorsList(HashMap<String,Object> dataMap){
         String sqlMapId = "Comments.selectBysearch";
         Object list = shareDao.getList(sqlMapId, dataMap);
+        return list;
     }
 
-    public void callVisitorsInsert(HashMap<String,Object> dataMap){
+    public Object VisitorsInsert(HashMap<String,Object> dataMap){
         // xml 파일에서 특정 id로 지정해서 쿼리문 호출
         String sqlMapId = "Comments.insert";
         // 고유번호 호출후 변수에 대입
@@ -33,9 +34,11 @@ public class QuestVisitorsService {
         dataMap.put("WRITER_ID", fkUnique);
 
         Object insert = shareDao.insert(sqlMapId, dataMap);
+
+        return insert;
     }
 
-    public void callVisitorsUpdate(HashMap<String,Object> dataMap){
+    public Object VisitorsUpdate(HashMap<String,Object> dataMap){
         String sqlMapId = "Comments.update";
         String pkUnique = commons.getUniqueSequence();
         String fkUnique = commons.getUniqueSequence();
@@ -43,14 +46,17 @@ public class QuestVisitorsService {
         dataMap.put("WRITER_ID",fkUnique);
 
         Object update = shareDao.update(sqlMapId, dataMap);
+
+        return update;
     }
 
-    public void callVisitorsDelete(HashMap<String,Object> dataMap){
+    public Object VisitorsDelete(HashMap<String,Object> dataMap){
         String sqlMapId = "Comments.delete";
         String pkUnique = commons.getUniqueSequence();
         dataMap.put("PK_VISITORS",pkUnique);
         Object delete = shareDao.delete(sqlMapId, dataMap);
 
+        return delete;
     }
 
 }
