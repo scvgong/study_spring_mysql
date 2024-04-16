@@ -1,4 +1,5 @@
 package com.example.co_templates.quests.services;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,18 @@ public class QuestBoardService {
 
     @Autowired
     Commons commons;
+
+    public Object list(Integer pageNumber, HashMap<String, String> dataMap){
+        String sqlMapId = "";
+        if (dataMap.size() == 0) {
+            sqlMapId = "Board.selectBysearch";
+        } else {
+            sqlMapId = "Board.selectByUID";
+        }
+        Object list = shareDao.getList(sqlMapId, dataMap);
+        return list;
+    }
+
 
     public Object BoardList(HashMap<String,Object> dataMap){
         String sqlMapId = "BoardCode.selectBysearch";

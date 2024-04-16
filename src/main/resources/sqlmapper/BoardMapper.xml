@@ -10,7 +10,7 @@
         SELECT * 
 		FROM BOARDS 
 		WHERE 1 = 1
-		AND PK_BOARDS = #{PK_BOARDS}; <!-- #{PK_BOARDS} -->
+		AND TITLE REGEXP "Tech"; <!-- #{PK_BOARDS} -->
 	</select>
 
 	<!-- 입력 -->
