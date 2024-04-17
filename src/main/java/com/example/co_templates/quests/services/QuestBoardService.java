@@ -20,9 +20,9 @@ public class QuestBoardService {
     public Object list(Integer pageNumber, HashMap<String, String> dataMap){
         String sqlMapId = "";
         if (dataMap.size() == 0) {
-            sqlMapId = "Board.selectBysearch";
+            sqlMapId = "BoardCode.selectBysearch";
         } else {
-            sqlMapId = "Board.selectByUID";
+            sqlMapId = "BoardCode.selectByUID";
         }
         Object list = shareDao.getList(sqlMapId, dataMap);
         return list;

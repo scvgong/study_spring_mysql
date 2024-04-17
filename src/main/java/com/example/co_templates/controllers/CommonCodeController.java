@@ -22,9 +22,8 @@ public class CommonCodeController {
     public ModelAndView list(ModelAndView modelAndView
                             , @RequestParam HashMap<String, Object> dataMap
                             , @RequestParam(name = "deleteIds", required = false) ArrayList<String> deleteIds) {
+
         ArrayList<HashMap<String, Object>> itemList = new ArrayList<HashMap<String, Object>>();
-        // Call Service with Pure Java
-        // CommonCodeService commonCodeService = new CommonCodeService();
         itemList = (ArrayList<HashMap<String, Object>>) commonCodeService.selectMany(dataMap);
 
         String viewPath = "/WEB-INF/views/commoncode/list.jsp";
@@ -41,6 +40,7 @@ public class CommonCodeController {
     public ModelAndView listPagination(ModelAndView modelAndView
                             , @RequestParam HashMap<String, Object> dataMap
                             , @RequestParam(name = "deleteIds", required = false) ArrayList<String> deleteIds) {
+                                
         Object result = commonCodeService.selectSearchWithPagination(dataMap);
 
         String viewPath = "/WEB-INF/views/commoncode/list_pagination.jsp";
