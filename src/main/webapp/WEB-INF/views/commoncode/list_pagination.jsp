@@ -4,38 +4,14 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap 5 Template</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
-</head>
+<!-- header-->
+<%@ include file="/WEB-INF/views/templates/header.jsp" %>
 
 <body>
 
     <!-- Menu -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">Logo</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/joinForm">joinForm</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <%@ include file="/WEB-INF/views/templates/navigator.jsp" %>
+   
 
     <!-- Main Content -->
     <form action="/commonCode/list_pagination" class="get">
@@ -75,7 +51,7 @@
                                     HashMap record = (HashMap) obj;
                             %>
                             <tr>
-                                <td><input type="checkbox" class="form-check-input" name = "deleteIds" value='<%= record.get("PK_ID") %>'></td>
+                                <td><input type="checkbox" class="form-check-input" name = "deleteIds" value='<%= record.get("PK_UNIQUE") %>'></td>
                                 <td><%= record.get("PK_UNIQUE") %></td>
                                 <td><%= record.get("CODE_NAME") %></td>
                                 <td><%= record.get("DESCRIPTION") %></td>
@@ -92,26 +68,27 @@
                 Paginations paginations = (Paginations) result.get("paginations");
             %>
             <nav aria-label="Page navigation">
-                <div><%= paginations.getTotalCount() %></div>
+                <div>Total Count : <%= paginations.getTotalCount() %></div>
                 <ul class="pagination justify-content-center">
-                    <li class="page-item"><button class="page-link" type="submit" name="currentPage" value="Previous">Previous</button></li>
-                    <li class="page-item"><button class="page-link" type="submit" name="currentPage" value="1">1</button></li>
-                    <li class="page-item"><button class="page-link" type="submit" name="currentPage" value="2">2</button></li>
-                    <li class="page-item"><button class="page-link" type="submit" name="currentPage" value="3">3</button></li>
-                    <li class="page-item"><button class="page-link" type="submit" name="currentPage" value="Next">Next</button></li>
+                    <li class="page-item"><button class="page-link" type="submit" name="currentPage" value="<%= paginations.getPreviousPage() %>">Previous</button></li>
+                    <% 
+                        for(int i = paginations.getBlockStart() ; i <= paginations.getBlockEnd() ; i++) {
+
+                    %>
+                    <li class="page-item"><button class="page-link" type="submit" name="currentPage" value="<%= i %>"><%= i %></button></li>
+                    <%
+                        }
+                    %>
+                    <!-- <li class="page-item"><button class="page-link" type="submit" name="currentPage" value="2">2</button></li>
+                    <li class="page-item"><button class="page-link" type="submit" name="currentPage" value="3">3</button></li> -->
+                    <li class="page-item"><button class="page-link" type="submit" name="currentPage" value="<%= paginations.getNextPage() %>">Next</button></li>
                 </ul>
             </nav>
         </div>
     </form>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-4 mt-4">
-        <div class="container">
-            <p>&copy; 2023 Your Website. All Rights Reserved.</p>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+    <%@ include file="/WEB-INF/views/templates/footer.jsp" %>
 </body>
 
 </html>

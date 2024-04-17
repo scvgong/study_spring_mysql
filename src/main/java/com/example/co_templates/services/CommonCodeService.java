@@ -51,6 +51,36 @@ public class CommonCodeService {
         return result;
     }
 
+    public Object deleteWithIn(Map dataMap){
+        String sqlMapId = "CommonCode.deletewithin";
+        Object count = shareDao.delete(sqlMapId, dataMap);
+        return count;
+    }
+
+    public Map selectSearchWithPaginationAndDeletes(Map dataMap) {
+        // delete
+        if(dataMap.get("deleteIds") != null){
+            Object count = this.deleteWithIn(dataMap);
+        }
+
+        // 페이지 형성 위한 계산
+        int totalCount = (int) this.selectTotal(dataMap);
+
+        int currentPage = 1;//페이지로 숫자가 안들어올수도 있어서 넣는것, 1page 라는 의미
+        if(dataMap.get("currentPage") != null) {
+            currentPage = Integer.parseInt((String)dataMap.get("currentPage"));    // from client in param
+        }
+        Paginations paginations = new Paginations(totalCount, currentPage); // total 값과 pagination 값
+        HashMap result = new HashMap<>();
+        result.put("paginations", paginations); // 페이지에 대한 정보
+        // page record 수
+        String sqlMapId = "CommonCode.selectSearchWithPagination";
+        dataMap.put("pageScale", paginations.getPageScale());
+        dataMap.put("pageBegin", paginations.getPageBegin());
+        result.put("resultList", shareDao.getList(sqlMapId, dataMap)); // 표현된 레코드 정보
+        return result;
+    }
+
     public void callDao(HashMap<String,Object> dataMap){
 
         // 여러개 가져오기
