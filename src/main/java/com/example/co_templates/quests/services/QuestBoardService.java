@@ -1,23 +1,59 @@
 package com.example.co_templates.quests.services;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.co_templates.daos.ShareDao;
 import com.example.co_templates.utils.Commons;
+import com.example.co_templates.utils.Paginations;
 
 @Service
 public class QuestBoardService {
 
     @Autowired
     ShareDao shareDao;
-
+    
     @Autowired
     Commons commons;
 
+    public String sqlMapId = "BoardCode.selectBysearch";
+
+    public Object board_list(HashMap<String, Object> dataMap){
+        String sqlMapId = "BoardCode.selectBysearch";
+        Object list = shareDao.getList(sqlMapId, dataMap);
+        return list;
+    }
+    public Object board_read(HashMap<String, Object> dataMap){
+        String sqlMapId = "BoardCode.selectByUID";
+        Object one = shareDao.getOne(sqlMapId, dataMap);
+        return one;
+    }
+    public int board_insert(HashMap<String, Object> dataMap){
+        String sqlMapId = "BoardCode.insert";
+        String PK_BOARDS = commons.getUniqueSequence();
+        dataMap.put("PK_BOARDS",PK_BOARDS);
+        Object insert = shareDao.insert(sqlMapId, dataMap);
+        return dataMap.size();
+    }
+
+    public int board_delete(HashMap<String, Object> dataMap){
+        String sqlMapId = "BoardCode.delete";
+        Object delete = shareDao.delete(sqlMapId, dataMap);
+        return dataMap.size();
+    }
+    public int board_update(HashMap<String, Object> dataMap){
+        String sqlMapId = "BoardCode.update";
+        Object update = shareDao.update(sqlMapId, dataMap);
+        return dataMap.size();
+    }
+
+
     public Object list(Integer pageNumber, HashMap<String, String> dataMap){
+        // ArrayList<HashMap<String, Object>> itemList = new ArrayList<HashMap<String, Object>>();
         String sqlMapId = "";
         if (dataMap.size() == 0) {
             sqlMapId = "BoardCode.selectBysearch";
@@ -28,50 +64,72 @@ public class QuestBoardService {
         return list;
     }
 
-
-    public Object BoardList(HashMap<String,Object> dataMap){
+    public Object selectMany(HashMap<String, Object> dataMap) {
+        // 여러개 가져오기
         String sqlMapId = "BoardCode.selectBysearch";
         Object list = shareDao.getList(sqlMapId, dataMap);
-
         return list;
     }
 
-    public Object BoardInsert(HashMap<String,Object> dataMap){
-        // xml 파일에서 특정 id로 지정해서 쿼리문 호출
-        String sqlMapId = "BoardCode.insert";
+    public Object selectTotal(Map dataMap) {
+        String sqlMapId = "BoardCode.selectTotal";
 
-        // {
-        //     "PK_BOARDS" : "news-020",
-        //     "TITLE" :"title",
-        //     "CONTENTS" : " test_contents",
-        //     "WRITER_ID" : "test_user",
-        //     "CREATE_DATE" : "2024-04-15",
-        //     "PARENT_BOARDS" : "test_boards"
-        // }
+        Object result = shareDao.getOne(sqlMapId, dataMap);
+        return result;
+    }    
 
-        Object insert = shareDao.insert(sqlMapId, dataMap);
+    public Map selectSearchWithPagination(Map dataMap) {
+        // 페이지 형성 위한 계산
+        int totalCount = (int) this.selectTotal(dataMap);
+        
+        int currentPage = 1;
+        if(dataMap.get("currentPage") != null) {
+            currentPage = Integer.parseInt((String)dataMap.get("currentPage"));    // from client in param
+        }
 
-        return insert;
+        Paginations paginations = new Paginations(totalCount, currentPage);
+        HashMap result = new HashMap<>();
+        result.put("paginations", paginations); // 페이지에 대한 정보
 
+        // page record 수
+        String sqlMapId = "BoardCode.selectSearchWithPagination";
+        dataMap.put("pageScale", paginations.getPageScale());
+        dataMap.put("pageBegin", paginations.getPageBegin());
+        
+        result.put("resultList", shareDao.getList(sqlMapId, dataMap)); // 표현된 레코드 정보
+        return result;
     }
 
-    public Object BoardUpdate(HashMap<String,Object> dataMap){
-        String sqlMapId = "BoardCode.update";
-        Object update = shareDao.update(sqlMapId, dataMap);
-        return update;
+    public Object deleteWithIn(Map dataMap){
+        String sqlMapId = "BoardCode.deletewithin";
+        Object count = shareDao.delete(sqlMapId, dataMap);
+        return count;
     }
 
-    public Object BoardDelete(HashMap<String,Object> dataMap){
-        String sqlMapId = "BoardCode.delete";
-        Object delete = shareDao.delete(sqlMapId, dataMap);
+    public Map selectSearchWithPaginationAndDeletes(Map dataMap) {
+        // delete
+        if (dataMap.get("deleteIds") != null){
+            Object count = this.deleteWithIn(dataMap);
+        }
 
-        // {
-        //     "PK_BOARDS" : "1b5ec6e8-b9f2-4d74-b923-094c6aa0cc54"
-        // }
+        // 페이지 형성 위한 계산
+        int totalCount = (int) this.selectTotal(dataMap);
+        
+        int currentPage = 1;
+        if(dataMap.get("currentPage") != null) {
+            currentPage = Integer.parseInt((String)dataMap.get("currentPage"));    // from client in param
+        }
 
+        Paginations paginations = new Paginations(totalCount, currentPage);
+        HashMap result = new HashMap<>();
+        result.put("paginations", paginations); // 페이지에 대한 정보
 
-        return delete;
+        // page record 수
+        String sqlMapId = "BoardCode.selectSearchWithPagination";
+        dataMap.put("pageScale", paginations.getPageScale());
+        dataMap.put("pageBegin", paginations.getPageBegin());
+        
+        result.put("resultList", shareDao.getList(sqlMapId, dataMap)); // 표현된 레코드 정보
+        return result;
     }
-
-
 }
