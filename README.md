@@ -5,6 +5,7 @@
 
 [Spring MVC](https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/mvc.html) Flow Diagram
 
+![mvc](https://github.com/scvgong/study_spring_mysql/assets/151099297/85ab67a4-3a7b-4089-b051-31dc780092ca)
 
 #### Main package
 - java:17
