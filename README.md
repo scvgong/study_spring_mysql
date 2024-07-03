@@ -1,4 +1,11 @@
 ## spring_mysql
+
+### Spring MVC
+* Spring Web model-view-controller(MVC)
+
+[Spring MVC](https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/mvc.html) Flow Diagram
+
+
 #### Main package
 - java:17
 - spring boot:3.1.11-SNAPSHOT
